@@ -1,12 +1,21 @@
 # frozen_string_literal: true
 
-require_relative 'node'
+require_relative 'linked_list'
 
 class HashMap
+  attr_accessor :bucket, :load_factor, :capacity
+
   def initialize
-    @load_factor = 0
-    @capaqcity = 0
+    @load_factor = 0.8
+    @capacity = 16
+    create_bucket(@capacity)
+  end
+
+  def create_bucket(cap)
     @bucket = []
+    cap.times do
+      @bucket.push(LinkedList.new)
+    end
   end
 
   def hash(key)
@@ -15,11 +24,33 @@ class HashMap
 
     key.each_char { |char| hash_code = prime_number * hash_code + char.ord }
 
-    hash_code
+    hash_code % capacity
   end
 
   def set(key, value)
     hash_code = hash(key)
-    @bucket[hash_code] = Node.new(key, value)
+    list = @bucket[hash_code]
+    index = list.find_key(key)
+    list.remove_at(index) unless index.nil?
+    list.append([key, value])
+  end
+
+  def get(key)
+    hash_code = hash(key)
+    list = @bucket[hash_code]
+    index = list.find_key(key)
+    return nil if index.nil?
+
+    list.at(index).value[1]
   end
 end
+
+
+test = HashMap.new
+
+test.set('apple', 'red')
+test.set('banana', 'yellow')
+
+
+puts test.get('apple')
+puts test.get('banana')
