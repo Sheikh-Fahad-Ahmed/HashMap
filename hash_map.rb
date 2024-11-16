@@ -71,27 +71,37 @@ class HashMap
     create_bucket(@capacity)
   end
 
-  
+  def keys
+    keys_arr = []
+    @bucket.each do |list|
+      list.size.times do |item|
+        keys_arr.push(list.at(item).value[0])
+      end
+    end
+    keys_arr
+  end
+
+  def values
+    values_arr = []
+    @bucket.each do |list|
+      list.size.times do |item|
+        values_arr.push(list.at(item).value[1])
+      end
+    end
+    values_arr
+  end
+
+  def entries
+    entry_list = []
+    @bucket.each do |list|
+      list.size.times do |item|
+        entry_list.push(list.at(item).value)
+      end
+    end
+    entry_list
+  end
 end
 
-
-test = HashMap.new
-
-test.set('apple', 'red')
-test.set('banana', 'yellow')
-test.set('carrot', 'orange')
-puts test.length
-
-
-puts test.get('apple')
-puts test.get('banana')
-puts test.get('carrot')
-
-puts test.remove('banana')
-
-p test.get('banana')
-
-puts test.length
 
 
 
