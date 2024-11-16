@@ -40,16 +40,22 @@ class LinkedList
     puts temp.value
   end
 
-  def remove_at(index)
-    pop if head.nil?
-
-    temp = at(index - 1)
-    prev = temp
-    temp = temp.next_node
-    prev.next_node = temp.next_node
+  def pop_first
+    temp = head
+    self.head = temp.next_node
     temp.next_node = nil
-    puts temp.value
     temp
+  end
+
+  def remove_at(index)
+    return pop_first if index.zero?
+    return pop if index == @size
+
+    temp = head
+    index.times do
+      temp = temp.next_node
+    end
+    temp.next_node = temp.next_node.next_node
   end
 
   def at(index)

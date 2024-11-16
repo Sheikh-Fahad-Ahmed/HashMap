@@ -43,6 +43,15 @@ class HashMap
 
     list.at(index).value[1]
   end
+
+  def has?(key)
+    hash_code = hash(key)
+    list = @bucket[hash_code]
+    index = list.find_key(key)
+    !index.nil?
+  end
+
+  
 end
 
 
@@ -54,3 +63,11 @@ test.set('banana', 'yellow')
 
 puts test.get('apple')
 puts test.get('banana')
+
+test.set('apple', 'round')
+
+puts test.get('apple')
+
+puts test.has?('apple')
+puts test.has?('banana')
+puts test.has?('orange')
