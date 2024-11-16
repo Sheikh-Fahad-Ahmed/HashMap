@@ -3,11 +3,12 @@
 require_relative 'linked_list'
 
 class HashMap
-  attr_accessor :bucket, :load_factor, :capacity
+  attr_accessor :bucket, :load_factor, :capacity, :length
 
   def initialize
     @load_factor = 0.8
     @capacity = 16
+    @length = 0
     create_bucket(@capacity)
   end
 
@@ -33,6 +34,7 @@ class HashMap
     index = list.find_key(key)
     list.remove_at(index) unless index.nil?
     list.append([key, value])
+    @length += 1
   end
 
   def get(key)
@@ -58,10 +60,13 @@ class HashMap
     unless index.nil?
       value = list.at(index).value[1]
       list.remove_at(index)
+      @length -= 1
       return value
     end
     nil
   end
+
+  
 end
 
 
@@ -70,6 +75,7 @@ test = HashMap.new
 test.set('apple', 'red')
 test.set('banana', 'yellow')
 test.set('carrot', 'orange')
+puts test.length
 
 
 puts test.get('apple')
@@ -79,6 +85,8 @@ puts test.get('carrot')
 puts test.remove('banana')
 
 p test.get('banana')
+
+puts test.length
 
 
 
