@@ -51,7 +51,17 @@ class HashMap
     !index.nil?
   end
 
-  
+  def remove(key)
+    hash_code = hash(key)
+    list = @bucket[hash_code]
+    index = list.find_key(key)
+    unless index.nil?
+      value = list.at(index).value[1]
+      list.remove_at(index)
+      return value
+    end
+    nil
+  end
 end
 
 
@@ -59,15 +69,18 @@ test = HashMap.new
 
 test.set('apple', 'red')
 test.set('banana', 'yellow')
+test.set('carrot', 'orange')
 
 
 puts test.get('apple')
 puts test.get('banana')
+puts test.get('carrot')
 
-test.set('apple', 'round')
+puts test.remove('banana')
 
-puts test.get('apple')
+p test.get('banana')
 
-puts test.has?('apple')
-puts test.has?('banana')
-puts test.has?('orange')
+
+
+
+

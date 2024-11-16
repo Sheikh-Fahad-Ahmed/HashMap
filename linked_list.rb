@@ -37,13 +37,14 @@ class LinkedList
       tail.next_node = nil
     end
     self.size -= 1
-    puts temp.value
+    temp
   end
 
   def pop_first
     temp = head
     self.head = temp.next_node
     temp.next_node = nil
+    @size -= 1
     temp
   end
 
@@ -83,7 +84,7 @@ class LinkedList
 
     temp = head
     index = 0
-    until temp.next_node.nil?
+    until temp.nil?
       return index if temp.value[0] == key
 
       temp = temp.next_node
