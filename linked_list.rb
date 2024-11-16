@@ -84,7 +84,7 @@ class LinkedList
 
     temp = head
     index = 0
-    until temp.nil?
+    until temp.next_node.nil?
       return index if temp.value[0] == key
 
       temp = temp.next_node

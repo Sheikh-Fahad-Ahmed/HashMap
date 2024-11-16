@@ -6,7 +6,7 @@ class HashMap
   attr_accessor :bucket, :load_factor, :capacity, :length
 
   def initialize
-    @load_factor = 0.8
+    @load_factor = 0.75
     @capacity = 16
     @length = 0
     create_bucket(@capacity)
@@ -30,9 +30,12 @@ class HashMap
 
   def set(key, value)
     hash_code = hash(key)
+    raise IndexError if hash_code.negative? || hash_code >= @bucket.length
+
     list = @bucket[hash_code]
     index = list.find_key(key)
     list.remove_at(index) unless index.nil?
+    resize if @length > @capacity * @load_factor
     list.append([key, value])
     @length += 1
   end
@@ -100,10 +103,13 @@ class HashMap
     end
     entry_list
   end
+
+  def resize
+    curr_entries = entries
+    @capacity *= 2
+    clear
+    curr_entries.each do |key,value|
+      set(key, value)
+    end
+  end
 end
-
-
-
-
-
-
