@@ -66,6 +66,11 @@ class HashMap
     nil
   end
 
+  def clear
+    @length = 0
+    create_bucket(@capacity)
+  end
+
   
 end
 
